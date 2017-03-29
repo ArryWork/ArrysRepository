@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bs.park.dao.ParkinglotMapper" >
+  <resultMap id="BaseResultMap" type="com.bs.park.pojo.Parkinglot" >
+    <id column="fid" property="fid" jdbcType="VARCHAR" />
+    <result column="spacenumber" property="spacenumber" jdbcType="INTEGER" />
+    <result column="areaid" property="areaid" jdbcType="VARCHAR" />
+    <result column="chargscale" property="chargscale" jdbcType="DOUBLE" />
+    <result column="availablespace" property="availablespace" jdbcType="INTEGER" />
+    <result column="detailaddress" property="detailaddress" jdbcType="CHAR" />
+    <result column="lotorder" property="lotorder" jdbcType="VARCHAR" />
+    <result column="longtitude" property="longtitude" jdbcType="VARCHAR"/>
+    <result column="latitude" property="latitude" jdbcType="VARCHAR"/>
+    <result column="area" property="area" jdbcType="VARCHAR"/>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    fid, spacenumber, areaid, chargscale, availablespace, detailaddress,longtitude,latitude,lotorder
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from parkinglot
+    where fid = #{fid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from parkinglot
+    where fid = #{fid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.bs.park.pojo.Parkinglot" >
+    insert into parkinglot (fid, spacenumber, areaid,
+      chargscale, availablespace, detailaddress,
+      lotorder)
+    values (#{fid,jdbcType=VARCHAR}, #{spacenumber,jdbcType=INTEGER}, #{areaid,jdbcType=VARCHAR},
+      #{chargscale,jdbcType=DOUBLE}, #{availablespace,jdbcType=INTEGER}, #{detailaddress,jdbcType=CHAR},
+      #{lotorder,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.bs.park.pojo.Parkinglot" >
+    insert into parkinglot
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="fid != null" >
+        fid,
+      </if>
+      <if test="spacenumber != null" >
+        spacenumber,
+      </if>
+      <if test="areaid != null" >
+        areaid,
+      </if>
+      <if test="chargscale != null" >
+        chargscale,
+      </if>
+      <if test="availablespace != null" >
+        availablespace,
+      </if>
+      <if test="detailaddress != null" >
+        detailaddress,
+      </if>
+      <if test="lotorder != null" >
+        lotorder,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="fid != null" >
+        #{fid,jdbcType=VARCHAR},
+      </if>
+      <if test="spacenumber != null" >
+        #{spacenumber,jdbcType=INTEGER},
+      </if>
+      <if test="areaid != null" >
+        #{areaid,jdbcType=VARCHAR},
+      </if>
+      <if test="chargscale != null" >
+        #{chargscale,jdbcType=DOUBLE},
+      </if>
+      <if test="availablespace != null" >
+        #{availablespace,jdbcType=INTEGER},
+      </if>
+      <if test="detailaddress != null" >
+        #{detailaddress,jdbcType=CHAR},
+      </if>
+      <if test="lotorder != null" >
+        #{lotorder,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bs.park.pojo.Parkinglot" >
+    update parkinglot
+    <set >
+      <if test="spacenumber != null" >
+        spacenumber = #{spacenumber,jdbcType=INTEGER},
+      </if>
+      <if test="areaid != null" >
+        areaid = #{areaid,jdbcType=VARCHAR},
+      </if>
+      <if test="chargscale != null" >
+        chargscale = #{chargscale,jdbcType=DOUBLE},
+      </if>
+      <if test="availablespace != null" >
+        availablespace = #{availablespace,jdbcType=INTEGER},
+      </if>
+      <if test="detailaddress != null" >
+        detailaddress = #{detailaddress,jdbcType=CHAR},
+      </if>
+      <if test="lotorder != null" >
+        lotorder = #{lotorder,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where fid = #{fid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bs.park.pojo.Parkinglot" >
+    update parkinglot
+    set spacenumber = #{spacenumber,jdbcType=INTEGER},
+      areaid = #{areaid,jdbcType=VARCHAR},
+      chargscale = #{chargscale,jdbcType=DOUBLE},
+      availablespace = #{availablespace,jdbcType=INTEGER},
+      detailaddress = #{detailaddress,jdbcType=CHAR},
+      lotorder = #{lotorder,jdbcType=VARCHAR}
+    where fid = #{fid,jdbcType=VARCHAR}
+  </update>
+
+  <update id="minusOne" parameterType="String">
+    update parkinglot p set p.availablespace=p.availablespace-1 where p.fid = #{parkid}
+  </update>
+  <update id="plusOne" parameterType="String">
+    update parkinglot p set p.availablespace=p.availablespace+1 where p.fid = #{parkid}
+  </update>
+
+  <select id="getParkinglotsByAreaId" resultMap="BaseResultMap">
+    select t.fid,t.spacenumber,t.areaid,t.chargscale,t.availablespace,t.detailaddress,a.areaname as area,t.longtitude,t.latitude
+    from parkinglot t left join area a on a.fid = t.areaid where t.areaid = #{areaid}
+  </select>
+
+
+  <update id="updateSpaceNumber">
+    update parkinglot pl set pl.availablespace =pl.availablespace+ (#{spaceNumber}- pl.spacenumber), pl.spacenumber = #{spaceNumber}
+    where pl.fid = #{parkId}
+  </update>
+
+  <insert id="addParkinglot" parameterType="com.bs.park.pojo.Parkinglot">
+    insert into parkinglot(<include refid="Base_Column_List"/>)
+      value(#{fid,jdbcType=VARCHAR}, #{spacenumber,jdbcType=INTEGER},
+            #{areaid,jdbcType=VARCHAR},
+            #{chargscale,jdbcType=DOUBLE},
+            #{spacenumber,jdbcType=INTEGER},
+            #{detailaddress,jdbcType=VARCHAR},
+            #{longtitude,jdbcType=VARCHAR},
+            #{latitude,jdbcType=VARCHAR}),
+            #{lotorder,jdbcType=VARCHAR})
+  </insert>
+</mapper>

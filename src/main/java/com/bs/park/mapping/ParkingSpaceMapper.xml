@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bs.park.dao.ParkingSpaceMapper" >
+  <resultMap id="BaseResultMap" type="com.bs.park.pojo.ParkingSpace" >
+    <result column="fid" property="fid" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="parkingid" property="parkingid" jdbcType="VARCHAR" />
+    <result column="spaceorder" property="spaceorder" jdbcType="VARCHAR" />
+    <result column="chargeScale" property="chargeScale" jdbcType="DOUBLE"/>
+  </resultMap>
+  <insert id="insert" parameterType="com.bs.park.pojo.ParkingSpace" >
+    insert into parkingspace (fid, status, parkingid, 
+      spaceorder)
+    values (#{fid,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{parkingid,jdbcType=VARCHAR}, 
+      #{spaceorder,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.bs.park.pojo.ParkingSpace" >
+    insert into parkingspace
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="fid != null" >
+        fid,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="parkingid != null" >
+        parkingid,
+      </if>
+      <if test="spaceorder != null" >
+        spaceorder,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="fid != null" >
+        #{fid,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="parkingid != null" >
+        #{parkingid,jdbcType=VARCHAR},
+      </if>
+      <if test="spaceorder != null" >
+        #{spaceorder,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <select id="getAvaliableSpace" parameterType="String" resultMap="BaseResultMap">
+    select *,p.chargscale as chargeScale from parkingspace t
+    left join parkinglot p on t.parkingid = p.fid
+    where t.parkingid = #{parkid} and t.status=0 LIMIT 0,1
+  </select>
+
+  <update id="setSpaceStatus" >
+    update parkingspace p set p.status = #{status} where p.fid=#{spaceid,jdbcType=INTEGER}
+  </update>
+
+  <update id="setSpaceStatusByOrd">
+    update parkingspace p set p.status = 0 where p.parkingid = #{parkingid} and p.spaceorder =#{spaceord}
+  </update>
+  <insert id="addParkingSpace" parameterType="com.bs.park.pojo.ParkingSpace">
+    <selectKey resultType="int" order="AFTER" keyProperty="fid">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into parkingspace(parkingid,spaceorder)value
+      (#{parkingid},(select(
+    case when (availablespace&gt;0) then (spacenumber-availablespace)
+         when (availablespace&lt;=0) then dafsdfa end
+    )as spaceord from parkinglot where fid = #{parkingid}))
+  </insert>
+
+  <select id="getSpaceById" resultType="com.bs.park.pojo.ParkingSpace">
+    select * from parkingspace where fid = #{spaceid}
+  </select>
+</mapper>

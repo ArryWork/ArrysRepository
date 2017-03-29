@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bs.park.dao.AdminMapper">
+  <resultMap id="BaseResultMap" type="com.bs.park.pojo.Admin">
+    <id column="fid" jdbcType="VARCHAR" property="fid" />
+    <result column="account" jdbcType="VARCHAR" property="account" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="areaid" jdbcType="VARCHAR" property="areaid" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="admintype" jdbcType="VARCHAR" property="admintype" />
+    <result column="headurl" jdbcType="VARCHAR" property="headurl" />
+    <result column="adminmail" jdbcType="VARCHAR" property="adminmail" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    fid, account, password, areaid, phone, admintype, headurl, adminmail
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from admin
+    where fid = #{fid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from admin
+    where fid = #{fid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.bs.park.pojo.Admin">
+    insert into admin (fid, account, password, 
+      areaid, phone, admintype, 
+      headurl, adminmail)
+    values (#{fid,jdbcType=VARCHAR}, #{account,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{areaid,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{admintype,jdbcType=VARCHAR}, 
+      #{headurl,jdbcType=VARCHAR}, #{adminmail,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.bs.park.pojo.Admin">
+    insert into admin
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="fid != null">
+        fid,
+      </if>
+      <if test="account != null">
+        account,
+      </if>
+      <if test="password != null">
+        password,
+      </if>
+      <if test="areaid != null">
+        areaid,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="admintype != null">
+        admintype,
+      </if>
+      <if test="headurl != null">
+        headurl,
+      </if>
+      <if test="adminmail != null">
+        adminmail,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="fid != null">
+        #{fid,jdbcType=VARCHAR},
+      </if>
+      <if test="account != null">
+        #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="areaid != null">
+        #{areaid,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="admintype != null">
+        #{admintype,jdbcType=VARCHAR},
+      </if>
+      <if test="headurl != null">
+        #{headurl,jdbcType=VARCHAR},
+      </if>
+      <if test="adminmail != null">
+        #{adminmail,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bs.park.pojo.Admin">
+    update admin
+    <set>
+      <if test="account != null">
+        account = #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="areaid != null">
+        areaid = #{areaid,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="admintype != null">
+        admintype = #{admintype,jdbcType=VARCHAR},
+      </if>
+      <if test="headurl != null">
+        headurl = #{headurl,jdbcType=VARCHAR},
+      </if>
+      <if test="adminmail != null">
+        adminmail = #{adminmail,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where fid = #{fid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bs.park.pojo.Admin">
+    update admin
+    set account = #{account,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      areaid = #{areaid,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      admintype = #{admintype,jdbcType=VARCHAR},
+      headurl = #{headurl,jdbcType=VARCHAR},
+      adminmail = #{adminmail,jdbcType=VARCHAR}
+    where fid = #{fid,jdbcType=VARCHAR}
+  </update>
+
+  <select id="queryAdmin" parameterType="com.bs.park.pojo.Admin" resultMap="BaseResultMap">
+    select a.fid,a.name,a.account,a.password,a.phone,
+      m.valuename as admintype,a.areaid,a.headurl
+     from admin a left join mark m on a.admintype= m.value
+    where account = #{account,jdbcType=VARCHAR} AND  password = #{password,jdbcType=VARCHAR}
+  </select>
+</mapper>

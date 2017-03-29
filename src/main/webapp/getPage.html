@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript">
+        function goPAGE() {
+            var browserName=navigator.userAgent.toLowerCase();
+            if ((navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i))) {
+                window.location.href="phone_login.jsp";
+            }
+            else {
+                window.location.href="login.html";	}
+        }
+        goPAGE();
+    </script>
+</head>
+<body>
+
+</body>
+</html>

@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bs.park.dao.BookInfoMapper">
+  <resultMap id="BaseResultMap" type="com.bs.park.pojo.BookInfo">
+    <id column="fid" jdbcType="VARCHAR" property="fid" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="userid" jdbcType="VARCHAR" property="userid" />
+    <result column="parkingid" jdbcType="VARCHAR" property="parkingid" />
+    <result column="booktime" jdbcType="TIMESTAMP" property="booktime" />
+    <result column="parktime" jdbcType="TIMESTAMP" property="parktime" />
+    <result column="ispayed" jdbcType="CHAR" property="ispayed" />
+    <result column="payamt" jdbcType="DOUBLE" property="payamt" />
+    <result column="endtime" jdbcType="TIMESTAMP" property="endtime" />
+    <result column="spaceord" jdbcType="VARCHAR" property="spaceord" />
+    <result column="parkinglot" jdbcType="VARCHAR" property="parkinglot" />
+    <result column="scale" jdbcType="DOUBLE" property="scale"/>
+    <result column="area" jdbcType="VARCHAR" property="area"/>
+    <result column="username" jdbcType="VARCHAR" property="username"/>
+    <result column="phone" jdbcType="VARCHAR" property="phone"/>
+  </resultMap>
+  <sql id="Base_Column_List">
+    fid, status, userid, parkingid, booktime, parktime, ispayed, payamt, endtime,spaceord,scale
+  </sql>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+      b.fid, b.status, b.userid, b.parkingid, b.booktime, b.parktime, b.ispayed, b.payamt, b.endtime,b.spaceord,b.scale, CONCAT(a.areaname,"--",p.detailaddress )as parkinglot
+    from bookinfo b
+    left join parkinglot p on b.parkingid = p.fid
+    left join area a on a.fid = p.areaid and p.fid = b.parkingid
+    where b.fid = #{fid,jdbcType=VARCHAR}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from bookinfo
+    where fid = #{fid,jdbcType=VARCHAR}
+  </delete>
+
+  <insert id="insert" parameterType="com.bs.park.pojo.BookInfo">
+    insert into bookinfo (fid, status, userid,
+      parkingid, booktime, parktime,
+      ispayed, payamt, endtime,spaceord,scale)
+    values (#{fid,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{userid,jdbcType=VARCHAR},
+      #{parkingid,jdbcType=VARCHAR}, #{booktime,jdbcType=TIMESTAMP}, #{parktime,jdbcType=TIMESTAMP},
+      #{ispayed,jdbcType=CHAR}, #{payamt,jdbcType=CHAR}, #{endtime,jdbcType=TIMESTAMP}, #{spaceord,jdbcType=VARCHAR},
+    #{scale,jdbcType=DOUBLE })
+  </insert>
+
+  <insert id="insertSelective" parameterType="com.bs.park.pojo.BookInfo">
+    insert into bookinfo
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="fid != null">
+        fid,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="userid != null">
+        userid,
+      </if>
+      <if test="parkingid != null">
+        parkingid,
+      </if>
+      <if test="booktime != null">
+        booktime,
+      </if>
+      <if test="parktime != null">
+        parktime,
+      </if>
+      <if test="ispayed != null">
+        ispayed,
+      </if>
+      <if test="payamt != null">
+        payamt,
+      </if>
+      <if test="endtime != null">
+        endtime,
+      </if>
+      <if test="spaceord != null">
+        spaceord,
+      </if>
+      <if test="scale != null">
+        scale
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="fid != null">
+        #{fid,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="parkingid != null">
+        #{parkingid,jdbcType=VARCHAR},
+      </if>
+      <if test="booktime != null">
+        #{booktime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="parktime != null">
+        #{parktime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ispayed != null">
+        #{ispayed,jdbcType=CHAR},
+      </if>
+      <if test="payamt != null">
+        #{payamt,jdbcType=CHAR},
+      </if>
+      <if test="endtime != null">
+        #{endtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="spaceord != null">
+        #{spaceord,jdbcType=CHAR},
+      </if>
+      <if test="scale != null">
+        #{scale,jdbcType=DOUBLE}
+      </if>
+    </trim>
+  </insert>
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.bs.park.pojo.BookInfo">
+    update bookinfo
+    <set>
+      <if test="status != null">
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null">
+        userid = #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="parkingid != null">
+        parkingid = #{parkingid,jdbcType=VARCHAR},
+      </if>
+      <if test="booktime != null">
+        booktime = #{booktime,jdbcType=VARCHAR},
+      </if>
+      <if test="parktime != null">
+        parktime = #{parktime,jdbcType=CHAR},
+      </if>
+      <if test="ispayed != null">
+        ispayed = #{ispayed,jdbcType=CHAR},
+      </if>
+      <if test="payamt != null">
+        payamt = #{payamt,jdbcType=CHAR},
+      </if>
+      <if test="endtime != null">
+        endtime = #{endtime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where fid = #{fid,jdbcType=VARCHAR}
+  </update>
+
+  <update id="updateByPrimaryKey" parameterType="com.bs.park.pojo.BookInfo">
+    update bookinfo
+    set status = #{status,jdbcType=VARCHAR},
+      userid = #{userid,jdbcType=VARCHAR},
+      parkingid = #{parkingid,jdbcType=VARCHAR},
+      booktime = #{booktime,jdbcType=VARCHAR},
+      parktime = #{parktime,jdbcType=CHAR},
+      ispayed = #{ispayed,jdbcType=CHAR},
+      payamt = #{payamt,jdbcType=CHAR},
+      endtime = #{endtime,jdbcType=VARCHAR}
+    where fid = #{fid,jdbcType=VARCHAR}
+  </update>
+
+  <select id="getBookInfoByUserId" parameterType="String" resultMap="BaseResultMap">
+    select t.fid,t.status,t.userid,t.parkingid,t.booktime,t.parktime,t.spaceord,pt.detailaddress as parkinglot,
+      a.areaname as area
+    from bookinfo t
+      left join parkinglot pt on pt.fid = t.parkingid
+      left join area a on a.fid = pt.areaid and pt.fid = t.parkingid
+    where t.userid = #{userid} and (t.status = 1 or t.status = 2)
+  </select>
+
+  <update id="updateBookInfo" parameterType="String">
+    update bookinfo bi set bi.endtime = now() where bi.fid = {bookInfoId}
+  </update>
+
+  <select id="getAllBookInfoByUserId" resultMap="BaseResultMap">
+    select t.fid,t.status,t.payamt,t.userid,t.parkingid,t.booktime,t.parktime,t.spaceord,pt.detailaddress as parkinglot,a.areaname as area
+    from bookinfo t left join parkinglot pt on pt.fid = t.parkingid left join area a on t.parkingid = pt.fid and pt.areaid = a.fid
+    where t.userid = #{userid} and MONTH(t.parktime)=#{month} and YEAR(t.parktime)=#{year} order by t.parktime desc
+  </select>
+
+  <select id="getCurrentParkMsg" resultMap="BaseResultMap">
+    select t.fid,t.status,t.userid,t.parkingid,t.booktime,t.parktime,t.spaceord,pt.detailaddress as parkinglot,
+    t.endtime,pt.chargscale as scale,(timestampdiff(second,  t.parktime,now())) as hasParkedTime, u.username,u.phone
+    from bookinfo t
+    left join parkinglot pt on pt.fid = t.parkingid
+    left join user u on t.userid = u.fid
+    where t.status != 0
+    <if test="areaid != null">
+          and t.parkingid in (select p.fid from parkinglot p where p.areaid = #{areaid} )
+    </if>
+    <if test="parkid != null">
+         and t.parkingid = #{parkid}
+    </if>
+    <if test="status != null">
+      and t.status = #{status}
+    </if>
+  </select>
+  <update id="updateBookInfoStatus">
+    update bookinfo bi set bi.status = #{status} where bi.fid = #{bookInfoId}
+  </update>
+
+  <select id="getEndedOrder" resultMap="BaseResultMap">
+    select t.fid,t.status,t.userid,t.parkingid,t.booktime,t.parktime,t.spaceord,pt.detailaddress as parkinglot,
+    t.endtime,pt.chargscale as scale, u.username,u.phone,(timestampdiff(second,  t.parktime,t.endtime))as hasParkedTime,
+    t.payamt from bookinfo t
+    left join parkinglot pt on pt.fid = t.parkingid
+    join user u on t.userid = u.fid
+    <if test="userAccount!=null">
+      and u.account = #{userAccount}
+    </if>
+    where (t.status = 0 or t.status =3)
+    <if test="areaid != null">
+      and t.parkingid in (select p.fid from parkinglot p where p.areaid = #{areaid} )
+    </if>
+    <if test="parkid != null">
+      and t.parkingid = #{parkid}
+    </if>
+    <if test="userAccount != null">
+      and t.status = #{status}
+    </if>
+    <if test="bookInfoId != null">
+      and t.fid = #{bookInfoId}
+    </if>
+  </select>
+
+  <select id="getUnpaidBookInfo" resultMap="BaseResultMap">
+    select t.fid,t.status,t.payamt,t.userid,t.parkingid,t.booktime,t.parktime,t.endtime,t.spaceord,pt.detailaddress as parkinglot,a.areaname as area
+    from bookinfo t left join parkinglot pt on pt.fid = t.parkingid left join area a on t.parkingid = pt.fid and pt.areaid = a.fid
+    where t.userid = #{userid} and t.ispayed = 0 order by t.parktime desc
+  </select>
+</mapper>

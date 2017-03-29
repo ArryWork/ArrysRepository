@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bs.park.dao.UserMapper" >
+  <resultMap id="BaseResultMap" type="com.bs.park.pojo.User" >
+    <result column="fid" property="fid" jdbcType="VARCHAR" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="account" property="account" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="credit" property="credit" jdbcType="INTEGER" />
+    <result column="idcard" property="idcard" jdbcType="VARCHAR" />
+    <result column="debt" property="debt" jdbcType="DOUBLE" />
+    <result column="status" property="status" jdbcType="CHAR" />
+    <result column="balance" property="balance" jdbcType="DOUBLE" />
+  </resultMap>
+  <insert id="insert" parameterType="com.bs.park.pojo.User" >
+    insert into user (fid, username, 'account',
+      'password', phone, credit,
+      idcard, debt, 'status',balance)
+    values (#{fid,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{account,jdbcType=VARCHAR}, 
+      #{password,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{credit,jdbcType=INTEGER}, 
+      #{idcard,jdbcType=VARCHAR}, #{debt,jdbcType=DOUBLE}, #{status,jdbcType=CHAR},#{balance,jdbcType=DOUBLE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.bs.park.pojo.User" >
+    insert into user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="fid != null" >
+        fid,
+      </if>
+      <if test="username != null" >
+        username,
+      </if>
+      <if test="account != null" >
+        account,
+      </if>
+      <if test="password != null" >
+        password,
+      </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="credit != null" >
+        credit,
+      </if>
+      <if test="idcard != null" >
+        idcard,
+      </if>
+      <if test="debt != null" >
+        debt,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="balance != null" >
+        balance,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="fid != null" >
+        #{fid,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="account != null" >
+        #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="credit != null" >
+        #{credit,jdbcType=INTEGER},
+      </if>
+      <if test="idcard != null" >
+        #{idcard,jdbcType=VARCHAR},
+      </if>
+      <if test="debt != null" >
+        #{debt,jdbcType=DOUBLE},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=CHAR},
+      </if>
+      <if test="balance != null" >
+        #{balance,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+
+  <select id="getUser" parameterType="com.bs.park.pojo.User" resultMap="BaseResultMap">
+       select u.fid,u.username,u.account,u.password,u.phone,u.credit,u.idcard,u.debt,u.status,u.balance  from user  u
+       where  u.account = #{account} and u.password = #{password}
+  </select>
+
+  <select id="getUserById" parameterType="String" resultMap="BaseResultMap">
+    select u.fid,u.username,u.account,u.password,u.phone,u.credit,u.idcard,u.debt,u.status,u.balance  from user  u
+    where  u.fid = #{userid}
+  </select>
+
+  <update id="setStatus">
+    update user u set u.status = #{status} where u.fid = #{userid}
+  </update>
+
+  <update id="deductCharg">
+    update user u set u.balance = #{balance} where u.fid = #{userid}
+  </update>
+
+  <update id="recharge">
+    update user u set u.balance =u.balance+ #{famt} where u.fid = #{userid}
+  </update>
+  <select id="queryUser"  resultMap="BaseResultMap">
+    select * from user
+  </select>
+  
+  <update id="massSetStatus" parameterType="String">
+    update user u set u.status = #{status}
+    where u.fid = #{userid}
+
+  </update>
+</mapper>

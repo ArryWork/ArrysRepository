@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bs.park.dao.PubMapper" >
+  <resultMap id="BaseResultMap" type="com.bs.park.pojo.Area" >
+    
+  </resultMap>
+
+  <select id="getArea"  resultType="com.bs.park.pojo.Area" parameterType="String">
+    select * from area a
+     where a.maxlongtitude  &gt; #{longtitude} and a.minlongtitude &lt;  #{longtitude}
+    and a.maxlatitude &gt; #{latitude} and a.minlatitude &lt; #{latitude}
+  </select>
+
+  <select id="getParkList" resultType="com.bs.park.pojo.Parkinglot" parameterType="String">
+    select t.fid,t.spacenumber,t.chargscale,t.availablespace,t.detailaddress,t.lotorder
+    from parkinglot  t where  t.areaid = #{areaid };
+  </select>
+
+  <select id="getAreaListByCanton" resultType="com.bs.park.pojo.Area" parameterType="String">
+    select * from area where area.cantoncode = #{cantoncode}
+  </select>
+</mapper>
