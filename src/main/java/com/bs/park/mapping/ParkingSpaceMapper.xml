@@ -66,9 +66,13 @@
     insert into parkingspace(parkingid,spaceorder)value
       (#{parkingid},(select(
     case when (availablespace&gt;0) then (spacenumber-availablespace)
-         when (availablespace&lt;=0) then dafsdfa end
+         when (availablespace&lt;=0) then 0 end
     )as spaceord from parkinglot where fid = #{parkingid}))
   </insert>
+
+  <delete id="deleteSpaceById">
+    delete from parkingspace where fid = #{spaceId}
+  </delete>
 
   <select id="getSpaceById" resultType="com.bs.park.pojo.ParkingSpace">
     select * from parkingspace where fid = #{spaceid}

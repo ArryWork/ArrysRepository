@@ -105,7 +105,6 @@ function initMap(){
     var map = new BMap.Map("locationMap");
     map.centerAndZoom(new BMap.Point(119.246319,26.090365), 17);
     map.addEventListener("click", function(e){
-        // alert(e.point.lng + ", " + e.point.lat);
         swal({title: "提示", text: "确定新停车场的位置在这吗", closeOnConfirm: true}, function () {
             $("#longtitude").val(e.point.lng);
             $("#latitude").val(e.point.lat);

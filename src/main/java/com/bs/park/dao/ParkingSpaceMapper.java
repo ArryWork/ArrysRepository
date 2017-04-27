@@ -16,4 +16,6 @@ public interface ParkingSpaceMapper {
     int addParkingSpace(ParkingSpace parkingSpace);
 
     ParkingSpace getSpaceById(@Param("spaceid") int spaceId);
+
+    void deleteSpaceById(@Param("spaceId") int fid);
 }

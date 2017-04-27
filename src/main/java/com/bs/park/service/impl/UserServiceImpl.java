@@ -335,6 +335,10 @@ public class UserServiceImpl implements UserService {
            nps.setParkingid(parkinglotid);
            parkingSpaceMapper.addParkingSpace(nps);
            parkingSpace = parkingSpaceMapper.getSpaceById(nps.getFid());
+           if("0".equals(parkingSpace.getSpaceorder())){
+               parkingSpaceMapper.deleteSpaceById(nps.getFid());
+               throw new RuntimeException("无车位");
+           }
        }else {
            spaceId = parkingSpace.getFid();
        }
