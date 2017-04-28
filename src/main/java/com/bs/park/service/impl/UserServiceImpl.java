@@ -171,6 +171,11 @@ public class UserServiceImpl implements UserService {
             return 0;
     }
 
+    @Override
+    public int setUserPassword(String userId, String password) {
+        return userMapper.setPassword(userId,password);
+    }
+
 
     /**
      * 正在停车中的停车信息

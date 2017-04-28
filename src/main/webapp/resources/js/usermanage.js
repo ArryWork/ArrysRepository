@@ -73,8 +73,9 @@ function initBtn() {
     $("#frozeUser").click(freezeUser);
     $("#resumeUser").click(resumeUser);
     $("#sendToEmail").click(sendToMsg);
+    $("#editBtn").click(showEditModal);
+    $("#resetPassword").click(resetPassword);
 }
-
 function freezeUser() {
     var user = $("#userTable").bootstrapTable("getSelections");
     if(user==null)
@@ -151,4 +152,38 @@ function sendToMsg() {
             swal("通知成功", "通知成功", "success");
         })
     }
+}
+
+function showEditModal() {
+    var user = $("#userTable").bootstrapTable("getSelections")[0];
+    if(user == null)
+        swal("warning","请选择一个用户","warning");
+    else{
+        $("#editName").val(user.username);
+        $("#editPhone").val(user.phone);
+        $("#editAccount").val(user.account);
+        $("#editIdCard").val(user.idcard);
+        $("#detailDig").modal("show");
+    }
+}
+
+function resetPassword(userId,email) {
+    var user = $("#userTable").bootstrapTable("getSelections")[0];
+    swal({title: "提示", text: "是否重置用户密码", closeOnConfirm: false}, function () {
+        $.ajax({
+            url: "resetUserPassword.do",
+            type: "post",
+            async: false,
+            data: {
+                userId: user.fid,
+                mail: user.account
+            },
+            success: function (data) {
+                data = JSON.parse(data);
+                $("#userTable").bootstrapTable("refresh");
+            }
+        });
+        swal("修改成功", "所选用户已修改成功", "success");
+    })
+
 }

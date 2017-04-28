@@ -23,4 +23,7 @@ public class UUIDTool {
 
         return UUID.randomUUID().toString().replace("-", "");
     }
+    public static String generatePassword(){
+        return UUID.randomUUID().toString().replace("-","").substring(27,32);
+    }
 }

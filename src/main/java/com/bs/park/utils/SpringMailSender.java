@@ -49,5 +49,20 @@ public class SpringMailSender {
         mailSender.send(smm);
     }
 
+    public void sendResetMail(String mail,String password) {
+        SimpleMailMessage sm = new SimpleMailMessage();
+        SimpleMailMessage smm = new SimpleMailMessage();
+        // 设定邮件参数
+        smm.setFrom(mailSender.getUsername());
+        smm.setTo(mail);
+        smm.setSubject("密码重置通知");
+        StringBuffer text =new StringBuffer();
+        text.append("您的密码已重置为：");
+        text.append(password);
+        text.append("。请您尽快上线修改您的密码");
+        smm.setText(text.toString());
+        // 发送邮件
+        mailSender.send(smm);
+    }
 }
 

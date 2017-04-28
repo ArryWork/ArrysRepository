@@ -9,6 +9,7 @@ import com.bs.park.service.AdminService;
 import com.bs.park.service.LoginService;
 import com.bs.park.service.UserService;
 import com.bs.park.utils.SpringMailSender;
+import com.bs.park.utils.UUIDTool;
 import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.apache.ibatis.annotations.Param;
 import org.apache.log4j.Logger;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
+import javax.swing.*;
 import java.io.*;
 import java.math.BigDecimal;
 import java.util.*;
@@ -39,6 +41,8 @@ public class AdminController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private SpringMailSender mailSender;
     @Autowired
     SpringMailSender springMailSender;
 
@@ -65,6 +69,10 @@ public class AdminController {
         return mv;
     }
 
+    @RequestMapping("goHome.do")
+    public String goHome(){
+        return "index";
+    }
     /**
      * 返回主页
      * @return
@@ -220,6 +228,15 @@ public class AdminController {
     @ResponseBody
     public List<BookInfo> showOrder(String areaid,String userAccount, String parkinglotid, String bookInfoId){
         return adminService.getOrder(areaid,userAccount,parkinglotid,bookInfoId);
+    }
+
+    @RequestMapping("resetUserPassword")
+    public Map<String,Object> resetUserPassword(String userId,String mail){
+        Map<String ,Object> result = new HashMap<>();
+        String password = UUIDTool.generatePassword();
+        userService.setUserPassword(userId,password);
+        mailSender.sendResetMail(mail,password);
+        return result;
     }
 
 }

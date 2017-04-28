@@ -46,4 +46,6 @@ public interface UserService {
     List<BookInfo> getUnpaidBoofInfo(String userid);
 
     int rePay(String userid, String bookinfoid);
+
+    int setUserPassword(String userId, String password);
 }

@@ -26,21 +26,15 @@
                 <button type="button" class="btn btn-outline btn-default">
                     <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>添加
                 </button>
-                <button type="button" class="btn btn-outline btn-default">
-                    <i class="glyphicon glyphicon-heart" aria-hidden="true"></i>修改
-                </button>
-                <button type="button" class="btn btn-outline btn-default">
-                    <i class="glyphicon glyphicon-trash" aria-hidden="true"></i>删除
-                </button>
-                <button type="button" class="btn btn-outline btn-default" id="detailsBtn">
-                    <i class="glyphicon  glyphicon-pencil" aria-hidden="true"></i>查看
+                <button type="button" id="editBtn" class="btn btn-outline btn-default">
+                    <i class="fa fa-edit" aria-hidden="true"></i>修改
                 </button>
                 <button type="button" class="btn btn-outline btn-default" id="frozeUser">
-                    <i class="glyphicon  glyphicon-pencil" aria-hidden="true"></i>冻结
+                    <i class="fa  fa-lock" aria-hidden="true"></i>冻结
                 </button>
 
                 <button type="button" class="btn btn-outline btn-default" id="resumeUser">
-                    <i class="glyphicon  glyphicon-pencil" aria-hidden="true"></i>恢复用户
+                    <i class="fa fa-unlock" aria-hidden="true"></i>恢复用户
                 </button>
 
                 <button type="button" class="btn btn-outline btn-default" id="sendToEmail">
@@ -61,13 +55,38 @@
         <div class="modal-dialog">
             <div class="modal-content animated bounceInRight">
                 <div class="modal-header">
-                    <i class="fa fa-laptop modal-icon"></i>
-                    <h4 class="modal-title">窗口标题</h4>
+                    <h4 class="modal-title">用户信息</h4>
                 </div>
                 <div class="modal-body">
-                    <a href="/admin/sendEmail.do" type="button">test </a>
+                    <div class="span12">
+                        <div class="row">
+                            <div class="col-sm-2 control-label">姓名
+                            </div>
+                            <div class="col-sm-4">
+                                <input type="text"  id="editName" class="form-control" />
+                            </div>
+                            <div class="col-sm-2">电话
+                            </div>
+                            <div class="col-sm-4">
+                                <input type="text" id="editPhone" class="form-control" readonly="readonly"/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-2 control-label">账号
+                        </div>
+                            <div class="col-sm-4">
+                                <input type="text" id="editAccount" class="form-control" readonly="readonly"/>
+                            </div>
+                            <div class="col-sm-2 control-label">身份证
+                            </div>
+                            <div class="col-sm-4">
+                                <input type="text" id="editIdCard" class="form-control" readonly="readonly"/>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
+                    <button id="resetPassword" type="button" class="btn btn-white" >重置用户密码</button>
                     <button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
                     <button type="button" class="btn btn-primary">保存</button>
                 </div>

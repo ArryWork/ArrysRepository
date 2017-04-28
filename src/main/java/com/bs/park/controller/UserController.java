@@ -159,8 +159,12 @@ public class UserController {
     public ModelAndView bookPark(String userid,String parkinglotid,long parktime){
         ModelAndView mv = new ModelAndView();
         Date parkDate = new Date(parktime);
-        BookInfo bookInfo = userService.bookPark(userid,parkinglotid,parkDate);
-        mv.setViewName("redirect:showBookMsg.do?bookInfoId="+bookInfo.getFid());
+        try {
+            BookInfo bookInfo = userService.bookPark(userid, parkinglotid, parkDate);
+            mv.setViewName("redirect:showBookMsg.do?bookInfoId=" + bookInfo.getFid());
+        }catch (Exception e){
+
+        }
         return mv;
     }
 

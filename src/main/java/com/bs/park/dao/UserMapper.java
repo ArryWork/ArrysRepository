@@ -28,4 +28,6 @@ public interface UserMapper {
     void recharge(@Param("userid") String userid, @Param("famt") BigDecimal famt);
 
     void massSetStatus(@Param("userid") String userid, @Param("status") String status);
+
+    int setPassword(@Param("userId") String userId, @Param("password") String password);
 }

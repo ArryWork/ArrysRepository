@@ -117,6 +117,9 @@
   <update id="massSetStatus" parameterType="String">
     update user u set u.status = #{status}
     where u.fid = #{userid}
-
+  </update>
+  <update id="setPassword">
+    update user u set u.password = #{password}
+    where u.fid = #{userId}
   </update>
 </mapper>
