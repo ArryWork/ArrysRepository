@@ -112,6 +112,11 @@
                <span style="color: #1b6d85; font-size: 20px; float: right; margin-right: 20px">账户余额${sessionScope.user.balance}</span>
             </div>
         </div>
+        <div class="menu_item" id="setPasswordBtn">
+            <div class="menu_item_de">
+                <div class="menu_icon"><i class="fa fa-edit"></i></div>&nbsp;&nbsp;修改密码
+            </div>
+        </div>
     </div>
 
 <%--选择停车场模态框--%>

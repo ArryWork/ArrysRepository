@@ -30,4 +30,6 @@ public interface UserMapper {
     void massSetStatus(@Param("userid") String userid, @Param("status") String status);
 
     int setPassword(@Param("userId") String userId, @Param("password") String password);
+
+    int validAndResetPassword(@Param("userId") String userId, @Param("password") String password, @Param("newPassword") String newPassword);
 }

@@ -122,4 +122,9 @@
     update user u set u.password = #{password}
     where u.fid = #{userId}
   </update>
+  <update id="validAndResetPassword">
+    update user u set u.password = #{newPassword}
+    where u.fid = #{userId} and u.password = #{password}
+  </update>
+
 </mapper>

@@ -176,6 +176,11 @@ public class UserServiceImpl implements UserService {
         return userMapper.setPassword(userId,password);
     }
 
+    @Override
+    public int validateAndResetPassword(String userId, String password, String newPassword) {
+        return userMapper.validAndResetPassword(userId,password,newPassword);
+    }
+
 
     /**
      * 正在停车中的停车信息

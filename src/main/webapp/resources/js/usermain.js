@@ -14,6 +14,9 @@ $(document).ready(function () {
     $("#unpaidOrderPage").click(function () {
         window.location.href="rePayOrderPage.do";
     });
+    $("#setPasswordBtn").click(function () {
+        window.location.href="setPasswordPage.do";
+    });
     initCitySelect();
 });
 

@@ -48,4 +48,6 @@ public interface UserService {
     int rePay(String userid, String bookinfoid);
 
     int setUserPassword(String userId, String password);
+
+    int validateAndResetPassword(String userId, String password, String newPassword);
 }

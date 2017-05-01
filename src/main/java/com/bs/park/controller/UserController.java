@@ -7,6 +7,7 @@ import com.bs.park.service.UserService;
 import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -257,6 +258,28 @@ public class UserController {
         } else {
             result.put("msg", "支付成功");
             result.put("flag", "1");
+        }
+        return result;
+    }
+
+
+    @RequestMapping("setPasswordPage")
+    public String redirectSetPasswordPage(){
+        return "setPasswordPage";
+    }
+    @RequestMapping("setPassword")
+    @ResponseBody
+    public Map<String, Object> setPassword(String userId,String password,String newPassword){
+        Map<String ,Object> result = new HashMap<>();
+        try {
+            int i = userService.validateAndResetPassword(userId,password,newPassword);
+            if(i!=1){
+                result.put("error","密码修改失败，请重新输入您的当前密码");
+                return result;
+            }
+        }catch (Exception e){
+            result.put("error",e.getMessage());
+            return result;
         }
         return result;
     }
